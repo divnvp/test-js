@@ -14,3 +14,22 @@ let courses = [
 let requiredRange1 = [null, 200];
 let requiredRange2 = [100, 350];
 let requiredRange3 = [200, null];
+
+function filterCourses() {
+  const filterByRange1 = [];
+  const filterByRange2 = [];
+  const filterByRange3 = [];
+
+  // first variant of sorting
+  courses.forEach(course => {
+    if (
+      course.prices.filter(
+        price => price >= requiredRange1[0] && price <= requiredRange1[1]
+      )
+    ) {
+      filterByRange1.push(course.name);
+    }
+  });
+}
+
+filterCourses();
