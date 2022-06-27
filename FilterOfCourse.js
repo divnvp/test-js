@@ -30,6 +30,16 @@ function filterCourses() {
       filterByRange1.push(course.name);
     }
   });
+
+  // second variant of sorting
+  for(let i = 0; i < courses.length; i++) {
+    if(
+      courses[i].prices[0] >= requiredRange2[0]
+      && courses[i].prices[1] <= requiredRange2[1]
+    ) {
+      filterByRange2.push(courses[i].name);
+    }
+  }
 }
 
 filterCourses();
