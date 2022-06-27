@@ -40,6 +40,18 @@ function filterCourses() {
       filterByRange2.push(courses[i].name);
     }
   }
+
+  // third variant of sorting
+  courses.map(course =>
+    course.prices[0] >= requiredRange3[0] &&
+    course.prices[1] <= requiredRange3[1] ?
+      filterByRange3.push(course.name)
+      : null
+  );
+
+  console.log(filterByRange1.join(", "));
+  console.log(filterByRange2.join(", "));
+  console.log(filterByRange3.join(", "));
 }
 
 filterCourses();
