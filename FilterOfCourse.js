@@ -15,43 +15,48 @@ let requiredRange1 = [null, 200];
 let requiredRange2 = [100, 350];
 let requiredRange3 = [200, null];
 
-function filterCourses() {
-  const filterByRange1 = [];
-  const filterByRange2 = [];
-  const filterByRange3 = [];
+function filterCourses(range) {
+  const result = [];
 
-  // first variant of sorting
   courses.forEach(course => {
-    if (
-      course.prices.filter(
-        price => price >= requiredRange1[0] && price <= requiredRange1[1]
-      )
-    ) {
-      filterByRange1.push(course.name);
+    if (!!range[1]) {
+      if (
+        +course.prices[0] >= +range[0] &&
+        +course.prices[0] <= +range[1]
+      ) {
+        if (
+          +range[1] >= +course.prices[1] &&
+          +range[0] < +course.prices[1]
+        ) {
+          result.push(course);
+        }
+      }
+    } else {
+      if (
+        +course.prices[0] >= +range[0] &&
+        +range[1] >= +course.prices[1]
+      ) {
+        result.push(course);
+      }
     }
   });
 
-  // second variant of sorting
-  for(let i = 0; i < courses.length; i++) {
-    if(
-      courses[i].prices[0] >= requiredRange2[0]
-      && courses[i].prices[1] <= requiredRange2[1]
-    ) {
-      filterByRange2.push(courses[i].name);
-    }
-  }
-
-  // third variant of sorting
-  courses.map(course =>
-    course.prices[0] >= requiredRange3[0] &&
-    course.prices[1] <= requiredRange3[1] ?
-      filterByRange3.push(course.name)
-      : null
-  );
-
-  console.log(filterByRange1.join(", "));
-  console.log(filterByRange2.join(", "));
-  console.log(filterByRange3.join(", "));
+  return result;
 }
 
-filterCourses();
+/*[
+  { name: 'Courses in England', prices: [ 0, 100 ] },
+  { name: 'Courses in Italy', prices: [ 100, 200 ] }
+]
+*/
+console.log(filterCourses(requiredRange1));
+
+/*[ { name: 'Courses in Italy', prices: [ 100, 200 ] } ]*/
+console.log(filterCourses(requiredRange2));
+
+/*[
+  { name: 'Courses in Germany', prices: [ 500, null ] },
+  { name: 'Courses in USA', prices: [ 200, null ] }
+]
+*/
+console.log(filterCourses(requiredRange3));
